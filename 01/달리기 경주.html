@@ -1,0 +1,44 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>출력결과</title>
+</head>
+
+<body>
+	<script>
+		function solution(players, callings) {
+			let answer = players;
+			let rank = {};
+
+			// 생성된 객체에 각 플레이어의 등수 저장
+			for (let i = 0; i < players.length; i++) {
+				rank[players[i]] = i + 1;
+			}
+
+			for (let i = 0; i < callings.length; i++) {
+				let callingPlayer = callings[i]; // 호명된 선수의 이름
+				let callingPlayerRank = rank[callingPlayer]; // value (호명된 성수의 등수)
+
+				if (callingPlayerRank > 1) { // 맨 앞 등수인 경우 호명되지 않으므로
+					let tempPlayer = players[callingPlayerRank - 2]; // 호명된 선수의 앞 선수 이름
+
+					players[callingPlayerRank - 2] = callingPlayer;
+					players[callingPlayerRank - 1] = tempPlayer;
+
+					rank[callingPlayer]--;
+					rank[tempPlayer]++;
+				}
+			}
+
+			return answer;
+		}
+
+		const players = ["mumu", "soe", "poe", "kai", "mine"];
+		const callings = ["kai", "kai", "mine", "mine"];
+
+		console.log(solution(players, callings));
+	</script>
+</body>
+
+</html>
